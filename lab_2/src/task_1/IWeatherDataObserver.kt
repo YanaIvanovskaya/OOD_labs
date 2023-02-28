@@ -6,8 +6,12 @@ interface IWeatherDataObserver {
     fun update(measurements: Measurements)
 }
 
-interface IObservable {
-    fun registerObserver(observer: IWeatherDataObserver)
+interface IWeatherDataObservable {
+    fun registerObserver(
+            observer: IWeatherDataObserver,
+            priority: Int
+    )
+
     fun unregisterObserver(observer: IWeatherDataObserver)
     fun notifyObservers()
 }

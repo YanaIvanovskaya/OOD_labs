@@ -3,8 +3,10 @@ package task_1
 fun main() {
     val weatherData = WeatherData()
 
-    weatherData.registerObserver(CurrentConditionsDisplay())
-    weatherData.registerObserver(AverageTemperatureDisplay())
+    val observer1 = CurrentConditionsDisplay()
+    val observer2 = AverageTemperatureDisplay()
+    weatherData.registerObserver(observer1, 3)
+    weatherData.registerObserver(observer2, 9)
 
     weatherData.setMeasurements(
             mapOf(

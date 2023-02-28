@@ -1,10 +1,12 @@
 package task_1
 
-class WeatherData : IObservable {
+import java.util.*
+
+class WeatherData : IWeatherDataObservable {
 
     private val mMeasurements = mutableMapOf<Measurement.Key, Measurement>()
 
-    private val mObservers = mutableSetOf<IWeatherDataObserver>()
+    private val mObservers = TreeMap<Int, MutableSet<IWeatherDataObserver>>(Comparator.reverseOrder())
 
     /**
      * Вызывается при каждом обновлении датчиков
@@ -18,17 +20,25 @@ class WeatherData : IObservable {
         measurementsChanged()
     }
 
-    override fun registerObserver(observer: IWeatherDataObserver) {
-        mObservers.add(observer)
+    override fun registerObserver(
+            observer: IWeatherDataObserver,
+            priority: Int
+    ) {
+        val observers = mObservers[priority] ?: mutableSetOf()
+        observers.add(observer)
+        mObservers[priority] = observers
     }
 
     override fun unregisterObserver(observer: IWeatherDataObserver) {
-        mObservers.add(observer)
+        mObservers.forEach { (_, observers) ->
+            observers.remove(observer)
+        }
     }
 
     override fun notifyObservers() {
-        mObservers.forEach {
-            it.update(measurements = mMeasurements)
+        mObservers.values.forEach { observers ->
+            Thread.sleep(500)
+            observers.forEach { it.update(measurements = mMeasurements) }
         }
     }
 
