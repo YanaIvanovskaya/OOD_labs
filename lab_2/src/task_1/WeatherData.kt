@@ -2,7 +2,9 @@ package task_1
 
 import java.util.*
 
-class WeatherData : IWeatherDataObservable {
+class WeatherData(
+        private val station: Station
+) : IWeatherDataObservable {
 
     private val mMeasurements = mutableMapOf<Measurement.Key, Measurement>()
 
@@ -38,7 +40,12 @@ class WeatherData : IWeatherDataObservable {
     override fun notifyObservers() {
         mObservers.values.forEach { observers ->
             Thread.sleep(500)
-            observers.forEach { it.update(measurements = mMeasurements) }
+            observers.forEach {
+                it.update(
+                        station = station,
+                        measurements = mMeasurements
+                )
+            }
         }
     }
 

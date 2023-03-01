@@ -3,7 +3,7 @@ package task_1
 typealias Measurements = Map<Measurement.Key, Measurement>
 
 interface IWeatherDataObserver {
-    fun update(measurements: Measurements)
+    fun update(station: Station, measurements: Measurements)
 }
 
 interface IWeatherDataObservable {
