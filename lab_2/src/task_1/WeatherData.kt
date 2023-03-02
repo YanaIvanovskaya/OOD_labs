@@ -26,6 +26,8 @@ class WeatherData(
             observer: IWeatherDataObserver,
             priority: Int
     ) {
+        require(priority >= 0) { "Priority must be positive" }
+
         val observers = mObservers[priority] ?: mutableSetOf()
         observers.add(observer)
         mObservers[priority] = observers
