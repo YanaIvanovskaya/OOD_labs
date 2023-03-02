@@ -8,7 +8,17 @@ sealed interface Measurement {
 
     data class Pressure(val value: Double) : Measurement
 
-    data class WindPower(val value: Int) : Measurement
+    data class WindPower(
+            val speed: Int,
+            val direction: Direction
+    ) : Measurement {
+        enum class Direction {
+            NORTH,
+            SOUTH,
+            WEST,
+            EAST
+        }
+    }
 
     data class RadiationLevel(val value: Int) : Measurement
 
