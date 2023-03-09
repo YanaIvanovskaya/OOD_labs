@@ -7,11 +7,18 @@ interface IWeatherDataObserver {
 }
 
 interface IWeatherDataObservable {
+    //    if  measurements == null  observer will be notified about all changes
     fun registerObserver(
             observer: IWeatherDataObserver,
-            priority: Int
+            priority: Int,
+            measurements: Set<Measurement.Key>? = null
     )
 
-    fun unregisterObserver(observer: IWeatherDataObserver)
+//    if  measurements == null  observer will be deleted completely
+    fun unregisterObserver(
+            observer: IWeatherDataObserver,
+            measurements: Set<Measurement.Key>? = null
+    )
+
     fun notifyObservers()
 }

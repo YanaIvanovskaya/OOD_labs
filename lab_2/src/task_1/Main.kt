@@ -36,19 +36,26 @@ fun main() {
     val weatherData = WeatherData(Station.OUT)
     val observer = AverageWindPowerDisplay()
 
-    weatherData.registerObserver(observer, 1)
+    weatherData.registerObserver(observer, 1, setOf(Measurement.Key.TEMPERATURE))
 
     weatherData.setMeasurements(mapOf(
             Measurement.Key.WIND_POWER to
                     Measurement.WindPower(20, Measurement.WindPower.Direction.EAST)
     ))
     weatherData.setMeasurements(mapOf(
+            Measurement.Key.TEMPERATURE to
+                    Measurement.Temperature(50.0)
+    ))
+
+    weatherData.registerObserver(observer, 1, setOf(Measurement.Key.WIND_POWER))
+
+    weatherData.setMeasurements(mapOf(
             Measurement.Key.WIND_POWER to
                     Measurement.WindPower(10, Measurement.WindPower.Direction.EAST)
     ))
     weatherData.setMeasurements(mapOf(
-            Measurement.Key.WIND_POWER to
-                    Measurement.WindPower(30, Measurement.WindPower.Direction.SOUTH)
+            Measurement.Key.TEMPERATURE to
+                    Measurement.Temperature(50.0)
     ))
 
 }
